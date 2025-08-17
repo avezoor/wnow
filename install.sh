@@ -11,9 +11,9 @@ curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
 
 sed -i '/# Wnow Setup Start/,/# Wnow Setup End/d' "$BASHRC"
 
-echo -e "\n# Wnow Setup Start [DO NOT DELETE THIS COMMENT]" >> "$BASHRC"
+echo -e "\n# [DO NOT DELETE THIS COMMENT]" >> "$BASHRC"
 cat "$TMP_SETUP" >> "$BASHRC"
-echo -e "# Wnow Setup End [DO NOT DELETE THIS COMMENT]\n" >> "$BASHRC"
+echo -e "# [DO NOT DELETE THIS COMMENT]\n" >> "$BASHRC"
 
 rm "$TMP_SETUP"
 
