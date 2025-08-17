@@ -3,7 +3,10 @@ wnow() {
     command -v curl >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null
 
     if [ -z "$1" ]; then
-        [ -f ~/.bashrc ] && source ~/.bashrc
+        if [ -f ~/.bashrc ]; then
+            source ~/.bashrc
+            echo -e "\e[32m[Wnow Command]\e[0m Wnow is already installed"
+        fi
     elif [ "$1" = "-opc" ]; then
         [ -f ~/.wnow ] || curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/command -o ~/.wnow
         gnome-text-editor ~/.wnow &
