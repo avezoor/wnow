@@ -5,7 +5,7 @@ wnow() {
     if [ -z "$1" ]; then
         if [ -f ~/.bashrc ]; then
             source ~/.bashrc
-            echo -e "\e[32m[Wnow Command]\e[0m Wnow is already installed"
+            echo -e "\e[32m[Wnow Setup]\e[0m Wnow is already installed"
         fi
     elif [ "$1" = "-opc" ]; then
         [ -f ~/.wnow ] || curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/command -o ~/.wnow
@@ -15,14 +15,14 @@ wnow() {
         gnome-text-editor ~/.bashrc &
         [ -f ~/.bashrc ] && source ~/.bashrc
     elif [ "$1" = "-d" ]; then
-        read -p $'\e[32m[Wnow Command]\e[0m Use default script from server? (y/n): ' choice
+        read -p $'\e[32m[Wnow Setup]\e[0m Use default script from server? (y/n): ' choice
         if [[ "$choice" =~ ^[Yy]$ ]]; then
             curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/command -o ~/.wnow
-            echo -e "\e[32m[Wnow Command]\e[0m script updated from server"
+            echo -e "\e[32m[Wnow Setup]\e[0m script updated from server"
         else
-            echo -e "\e[32m[Wnow Command]\e[0m Kept local script"
+            echo -e "\e[32m[Wnow Setup]\e[0m Kept local script"
         fi
     else
-        echo -e "\e[32m[Wnow Command]\e[0m command not found"
+        echo -e "\e[32m[Wnow Setup]\e[0m command not found"
     fi
 }
