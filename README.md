@@ -34,7 +34,7 @@ Don't Forget:
 ```bash
 source ~/.bashrc
 ```
-### Uinstall Wnow Setup
+### Uninstall Wnow Setup
 
 ```bash
 wnow uinstall
