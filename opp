@@ -1,0 +1,25 @@
+wnow() {
+    command -v gnome-text-editor >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null
+    command -v curl >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null
+
+    if [ -z "$1" ]; then
+        [ -f ~/.bashrc ] && source ~/.bashrc
+    elif [ "$1" = "-opc" ]; then
+        [ -f ~/.wnow ] || curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/command -o ~/.wnow
+        gnome-text-editor ~/.wnow &
+        [ -f ~/.wnow ] && source ~/.wnow
+    elif [ "$1" = "-opp" ]; then
+        gnome-text-editor ~/.bashrc &
+        [ -f ~/.bashrc ] && source ~/.bashrc
+    elif [ "$1" = "-d" ]; then
+        read -p $'\e[32m[Wnow Command]\e[0m Use default script from server? (y/n): ' choice
+        if [[ "$choice" =~ ^[Yy]$ ]]; then
+            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/command -o ~/.wnow
+            echo -e "\e[32m[Wnow Command]\e[0m script updated from server"
+        else
+            echo -e "\e[32m[Wnow Command]\e[0m Kept local script"
+        fi
+    else
+        echo -e "\e[32m[Wnow Command]\e[0m command not found"
+    fi
+}
