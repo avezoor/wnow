@@ -9,11 +9,13 @@ command -v gnome-text-editor >/dev/null 2>&1 || sudo apt-get update -qq >/dev/nu
 TMP_SETUP=$(mktemp)
 curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
 
-sed -i '/# Wnow Setup Start/,/# Wnow Setup End/d' "$BASHRC"
+# Hapus block lama jika ada
+sed -i '/#\[DO NOT DELETE\]/,/#\[DO NOT DELETE\]/d' "$BASHRC"
 
-echo -e "\n# [DO NOT DELETE THIS WNOW COMMENT]" >> "$BASHRC"
+# Append block baru
+echo -e "\n#[DO NOT DELETE]" >> "$BASHRC"
 cat "$TMP_SETUP" >> "$BASHRC"
-echo -e "# [DO NOT DELETE THIS WNOW COMMENT]\n" >> "$BASHRC"
+echo -e "#\[DO NOT DELETE]\n" >> "$BASHRC"
 
 rm "$TMP_SETUP"
 
