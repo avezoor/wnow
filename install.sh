@@ -9,9 +9,9 @@ else
     TMP_SETUP=$(mktemp)
     curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
 
-    echo -e "\n# Wnow Setup Start" >> "$BASHRC"
+    echo -e "\n# Wnow Setup Start [DO NOT DELETE THIS COMMENT]" >> "$BASHRC"
     cat "$TMP_SETUP" >> "$BASHRC"
-    echo -e "# Wnow Setup End\n" >> "$BASHRC"
+    echo -e "# Wnow Setup End [DO NOT DELETE THIS COMMENT]\n" >> "$BASHRC"
 
     rm "$TMP_SETUP"
 
