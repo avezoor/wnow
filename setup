@@ -23,7 +23,7 @@ wnow() {
     elif [ "$1" == "fix" ]; then
         sudo apt --fix-broken install
     elif [ "$1" = "-d" ]; then
-        SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/setup"
+        SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/main/setup"
         BASHRC="$HOME/.bashrc"
 
         echo -e "\e[32m[$WNOWCMD Setup]\e[0m This will update $WNOWCMD setup in your bashrc"
@@ -47,7 +47,7 @@ wnow() {
             echo -e "\e[32m[$WNOWCMD Setup]\e[0m Operation canceled"
         fi
     elif [ "$1" = "unset" ]; then
-        SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/unset"
+        SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/main/unset"
         BASHRC="$HOME/.bashrc"
 
         echo -e "\e[32m[$WNOWCMD Setup]\e[0m This will delete $WNOWCMD setup in your bashrc"
