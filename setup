@@ -1,75 +1,72 @@
 wnow() {
-    command -v curl >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null
-    command -v gnome-text-editor >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null
+    # Pastikan curl dan gnome-text-editor terinstal
+    command -v curl >/dev/null 2>&1 || { sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null; }
+    command -v gnome-text-editor >/dev/null 2>&1 || { sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null; }
 
-    if [ -z "$1" ]; then
-        [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc" && echo -e "\e[32m[Wnow Setup]\e[0m Wnow is already installed"
-    elif [ "$1" = "-opp" ]; then
-        gnome-text-editor "$HOME/.bashrc" &
-        [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
-    elif [ "$1" == "up" ]; then
-        sudo apt update && sudo apt upgrade -y
-        sudo apt autoremove -y
-        sudo apt autoclean -y
-    elif [ "$1" == "del" ]; then
-        sudo apt remove -y "$2" && sudo apt purge -y "$2" && sudo apt autoremove -y
-    elif [ "$1" == "home" ]; then
-        cd ~
-    elif [ "$1" == "desk" ]; then
-        cd ~/Desktop
-    elif [ "$1" == "find" ]; then
-        apt list --installed | grep "$2"
-    elif [ "$1" == "fix" ]; then
-        sudo apt --fix-broken install
-    elif [ "$1" = "-d" ]; then
-        SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/main/setup"
-        BASHRC="$HOME/.bashrc"
+    BASHRC="$HOME/.bashrc"
 
-        echo -e "\e[32m[Wnow Setup]\e[0m This will update Wnow setup in your bashrc"
-        read -p $'\e[32m[Wnow Setup]\e[0m Proceed? (y/n): ' choice
+    update_or_unset() {
+        local action="$1"
+        local url="$2"
+        echo -e "\e[32m[System Setup]\e[0m This will $action Wnow setup in your bashrc"
+        read -p $'\e[32m[System Setup]\e[0m Proceed? (y/n): ' choice
         if [[ "$choice" =~ ^[Yy]$ ]]; then
             TMP_SETUP=$(mktemp)
-            curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
-
-            sed -i '/#\[DO NOT DELETE\]/,/#\[DO NOT DELETE\]/d' "$BASHRC"
-
-            {
-                echo "#[DO NOT DELETE]"
-                cat "$TMP_SETUP"
-                echo "#[DO NOT DELETE]"
-            } >> "$BASHRC"
-
-            rm "$TMP_SETUP"
-            source "$BASHRC"
-            echo -e "\e[32m[Wnow Setup]\e[0m Wnow setup updated in .bashrc"
+            if curl -fsSL "$url" -o "$TMP_SETUP"; then
+                sed -i '/#\[DO NOT DELETE\]/,/#\[DO NOT DELETE\]/d' "$BASHRC"
+                {
+                    echo "#[DO NOT DELETE]"
+                    cat "$TMP_SETUP"
+                    echo "#[DO NOT DELETE]"
+                } >> "$BASHRC"
+                rm "$TMP_SETUP"
+                source "$BASHRC"
+                echo -e "\e[32m[System Setup]\e[0m Wnow setup $action in .bashrc"
+            else
+                echo -e "\e[31m[System Setup]\e[0m Failed to download setup file"
+                rm -f "$TMP_SETUP"
+            fi
         else
-            echo -e "\e[32m[Wnow Setup]\e[0m Operation canceled"
+            echo -e "\e[32m[System Setup]\e[0m Operation canceled"
         fi
-    elif [ "$1" = "unset" ]; then
-        SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/main/unset"
-        BASHRC="$HOME/.bashrc"
+    }
 
-        echo -e "\e[32m[Wnow Setup]\e[0m This will delete Wnow setup in your bashrc"
-        read -p $'\e[32m[Wnow Setup]\e[0m Proceed? (y/n): ' choice
-        if [[ "$choice" =~ ^[Yy]$ ]]; then
-            TMP_SETUP=$(mktemp)
-            curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
-
-            sed -i '/#\[DO NOT DELETE\]/,/#\[DO NOT DELETE\]/d' "$BASHRC"
-
-            {
-                echo "#[DO NOT DELETE]"
-                cat "$TMP_SETUP"
-                echo "#[DO NOT DELETE]"
-            } >> "$BASHRC"
-
-            rm "$TMP_SETUP"
-            source "$BASHRC"
-            echo -e "\e[32m[Wnow Setup]\e[0m Wnow setup deleted in .bashrc"
-        else
-            echo -e "\e[32m[Wnow Setup]\e[0m Operation canceled"
-        fi
-    else
-        echo -e "\e[32m[Wnow Setup]\e[0m command not found"
-    fi
+    case "$1" in
+        "")
+            [ -f "$BASHRC" ] && source "$BASHRC" && echo -e "\e[32m[System Setup]\e[0m Wnow is already installed"
+            ;;
+        -opp)
+            gnome-text-editor "$BASHRC"
+            [ -f "$BASHRC" ] && source "$BASHRC"
+            ;;
+        up)
+            sudo apt update && sudo apt upgrade -y
+            sudo apt autoremove -y
+            sudo apt autoclean -y
+            ;;
+        del)
+            sudo apt remove -y "$2" && sudo apt purge -y "$2" && sudo apt autoremove -y
+            ;;
+        home)
+            cd ~
+            ;;
+        desk)
+            cd ~/Desktop
+            ;;
+        find)
+            apt list --installed | grep "$2"
+            ;;
+        fix)
+            sudo apt --fix-broken install
+            ;;
+        -d)
+            update_or_unset "update" "https://raw.githubusercontent.com/avezoor/wnow/main/setup"
+            ;;
+        unset)
+            update_or_unset "delete" "https://raw.githubusercontent.com/avezoor/wnow/main/unset"
+            ;;
+        *)
+            echo -e "\e[32m[System Setup]\e[0m command not found"
+            ;;
+    esac
 }
