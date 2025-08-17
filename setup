@@ -1,9 +1,10 @@
+WNOWCMD="wnow"
 wnow() {
     command -v curl >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null
     command -v gnome-text-editor >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null
 
     if [ -z "$1" ]; then
-        [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc" && echo -e "\e[32m[Wnow Setup]\e[0m Wnow is already installed"
+        [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc" && echo -e "\e[32m[$WNOWCMD Setup]\e[0m $WNOWCMD is already installed"
     elif [ "$1" = "-opp" ]; then
         gnome-text-editor "$HOME/.bashrc" &
         [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
@@ -25,13 +26,14 @@ wnow() {
         SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/setup"
         BASHRC="$HOME/.bashrc"
 
-        echo -e "\e[32m[Wnow Setup]\e[0m This will update Wnow section in your bashrc"
+        echo -e "\e[32m[$WNOWCMD Setup]\e[0m This will update $WNOWCMD setup in your bashrc"
         read -p $'\e[32mProceed? (y/n):\e[0m ' choice
         if [[ "$choice" =~ ^[Yy]$ ]]; then
             TMP_SETUP=$(mktemp)
             curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
 
             sed -i '/#\[DO NOT DELETE\]/,/#\[DO NOT DELETE\]/d' "$BASHRC"
+
             {
                 echo "#[DO NOT DELETE]"
                 cat "$TMP_SETUP"
@@ -40,11 +42,35 @@ wnow() {
 
             rm "$TMP_SETUP"
             source "$BASHRC"
-            echo -e "\e[32m[Wnow Setup]\e[0m Wnow section updated in .bashrc"
+            echo -e "\e[32m[$WNOWCMD Setup]\e[0m $WNOWCMD setup updated in .bashrc"
         else
-            echo -e "\e[32m[Wnow Setup]\e[0m Operation canceled"
+            echo -e "\e[32m[$WNOWCMD Setup]\e[0m Operation canceled"
+        fi
+    elif [ "$1" = "unset" ]; then
+        SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/unset"
+        BASHRC="$HOME/.bashrc"
+
+        echo -e "\e[32m[$WNOWCMD Setup]\e[0m This will delete $WNOWCMD setup in your bashrc"
+        read -p $'\e[32mProceed? (y/n):\e[0m ' choice
+        if [[ "$choice" =~ ^[Yy]$ ]]; then
+            TMP_SETUP=$(mktemp)
+            curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
+
+            sed -i '/#\[DO NOT DELETE\]/,/#\[DO NOT DELETE\]/d' "$BASHRC"
+
+            {
+                echo "#[DO NOT DELETE]"
+                cat "$TMP_SETUP"
+                echo "#[DO NOT DELETE]"
+            } >> "$BASHRC"
+
+            rm "$TMP_SETUP"
+            source "$BASHRC"
+            echo -e "\e[32m[$WNOWCMD Setup]\e[0m $WNOWCMD setup deleted in .bashrc"
+        else
+            echo -e "\e[32m[$WNOWCMD Setup]\e[0m Operation canceled"
         fi
     else
-        echo -e "\e[32m[Wnow Setup]\e[0m command not found"
+        echo -e "\e[32m[$WNOWCMD Setup]\e[0m command not found"
     fi
 }
