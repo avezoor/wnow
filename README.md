@@ -1,5 +1,15 @@
 # Wnow Installer
+---
 
+## Features
+
+* Automatically adds Wnow function to `~/.bashrc`.
+* Prevents duplicate installation.
+* Sources `.bashrc` after setup for immediate use.
+* Downloads the latest setup script from the official Wnow repository.
+
+---
+  
 ## Installation on Linux
 
 ### Support for
@@ -40,11 +50,3 @@ source ~/.bashrc
 ```bash
 wnow unset
 ```
----
-
-## Features
-
-* Automatically adds Wnow function to `~/.bashrc`.
-* Prevents duplicate installation.
-* Sources `.bashrc` after setup for immediate use.
-* Downloads the latest setup script from the official Wnow repository.
