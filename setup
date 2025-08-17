@@ -1,28 +1,38 @@
 wnow() {
-    command -v gnome-text-editor >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null
-    command -v curl >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null
+    # Pastikan gnome-text-editor & curl terinstall
+    command -v gnome-text-editor >/dev/null 2>&1 || (sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null)
+    command -v curl >/dev/null 2>&1 || (sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null)
 
     if [ -z "$1" ]; then
-        if [ -f ~/.bashrc ]; then
-            source ~/.bashrc
-            echo -e "\e[32m[Wnow Setup]\e[0m Wnow is already installed"
-        fi
-    elif [ "$1" = "-opc" ]; then
-        [ -f ~/.wnow ] || curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/command -o ~/.wnow
-        gnome-text-editor ~/.wnow &
-        [ -f ~/.wnow ] && source ~/.wnow
+        [ -f ~/.bashrc ] && source ~/.bashrc && echo "[Wnow Setup] Wnow is already installed"
     elif [ "$1" = "-opp" ]; then
         gnome-text-editor ~/.bashrc &
         [ -f ~/.bashrc ] && source ~/.bashrc
     elif [ "$1" = "-d" ]; then
-        read -p $'\e[32m[Wnow Setup]\e[0m Use default script from server? (y/n): ' choice
+        echo "[Wnow Setup] This will overwrite your current bashrc with the default script from repository!"
+        read -p "Proceed? (y/n): " choice
         if [[ "$choice" =~ ^[Yy]$ ]]; then
-            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/command -o ~/.wnow
-            echo -e "\e[32m[Wnow Setup]\e[0m script updated from server"
+            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/setup -o ~/.bashrc
+            source ~/.bashrc
+            echo "[Wnow Setup] Default script applied"
         else
-            echo -e "\e[32m[Wnow Setup]\e[0m Kept local script"
+            echo "[Wnow Setup] Operation canceled, local bashrc kept"
         fi
+    elif [ "$1" == "up" ]; then
+        sudo apt update && sudo apt upgrade -y
+        sudo apt autoremove -y
+        sudo apt autoclean -y
+    elif [ "$1" == "del" ]; then
+        sudo apt remove -y "$2" && sudo apt purge -y "$2" && sudo apt autoremove -y
+    elif [ "$1" == "home" ]; then
+        cd ~
+    elif [ "$1" == "desk" ]; then
+        cd ~/Desktop
+    elif [ "$1" == "find" ]; then
+        apt list --installed | grep "$2"
+    elif [ "$1" == "fix" ]; then
+        sudo apt --fix-broken install
     else
-        echo -e "\e[32m[Wnow Setup]\e[0m command not found"
+        echo "[Wnow Setup] command not found"
     fi
 }
