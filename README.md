@@ -29,6 +29,17 @@ Remove the installer file afterwards:
 rm ./install.sh
 ```
 
+Don't Forget:
+
+```bash
+source ~/.bashrc
+```
+### Uinstall Wnow Setup
+
+```bash
+wnow uinstall
+```
+
 ## Features
 
 * Automatically adds Wnow function to `~/.bashrc`.
