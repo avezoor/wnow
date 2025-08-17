@@ -1,11 +1,11 @@
 wnow() {
     # Pastikan curl dan gnome-text-editor terinstal
     command -v curl >/dev/null 2>&1 || { sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null; }
-    command -v gnome-text-editor >/dev/null 2>&1 || { sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null; }
+    command -v gnome-text-editor >/dev/null 2>&1 || { sudo apt-get update -qq >/dev/null && suAUdo apt-get install -y -qq gnome-text-editor >/dev/null; }
 
-    BASHRC="$HOME/.bashrc"
+    wnowBASHRC="$HOME/.bashrc"
 
-    update_or_unset() {
+    wnowAUTOGRAB() {
         local action="$1"
         local url="$2"
         echo -e "\e[32m[System Setup]\e[0m This will $action Wnow setup in your bashrc"
@@ -13,14 +13,14 @@ wnow() {
         if [[ "$choice" =~ ^[Yy]$ ]]; then
             TMP_SETUP=$(mktemp)
             if curl -fsSL "$url" -o "$TMP_SETUP"; then
-                sed -i '/#\[DO NOT DELETE\]/,/#\[DO NOT DELETE\]/d' "$BASHRC"
+                sed -i '/#\[DO NOT DELETE\]/,/#\[DO NOT DELETE\]/d' "$wnowBASHRC"
                 {
                     echo "#[DO NOT DELETE]"
                     cat "$TMP_SETUP"
                     echo "#[DO NOT DELETE]"
-                } >> "$BASHRC"
+                } >> "$wnowBASHRC"
                 rm "$TMP_SETUP"
-                source "$BASHRC"
+                source "$wnowBASHRC"
                 echo -e "\e[32m[System Setup]\e[0m Wnow setup $action in .bashrc"
             else
                 echo -e "\e[31m[System Setup]\e[0m Failed to download setup file"
@@ -33,11 +33,11 @@ wnow() {
 
     case "$1" in
         "")
-            [ -f "$BASHRC" ] && source "$BASHRC" && echo -e "\e[32m[System Setup]\e[0m Wnow is already installed"
+            [ -f "$wnowBASHRC" ] && source "$wnowBASHRC" && echo -e "\e[32m[System Setup]\e[0m Wnow is already installed"
             ;;
         -opp)
-            gnome-text-editor "$BASHRC"
-            [ -f "$BASHRC" ] && source "$BASHRC"
+            gnome-text-editor "$wnowBASHRC"
+            [ -f "$wnowBASHRC" ] && source "$wnowBASHRC"
             ;;
         up)
             sudo apt update && sudo apt upgrade -y
@@ -60,10 +60,10 @@ wnow() {
             sudo apt --fix-broken install
             ;;
         -d)
-            update_or_unset "update" "https://raw.githubusercontent.com/avezoor/wnow/main/setup"
+            wnowAUTOGRAB "update" "https://raw.githubusercontent.com/avezoor/wnow/main/setup"
             ;;
         unset)
-            update_or_unset "delete" "https://raw.githubusercontent.com/avezoor/wnow/main/unset"
+            wnowAUTOGRAB "delete" "https://raw.githubusercontent.com/avezoor/wnow/main/unset"
             ;;
         *)
             echo -e "\e[32m[System Setup]\e[0m command not found"
