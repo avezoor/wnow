@@ -38,7 +38,7 @@ source ~/.bashrc
 ### Uninstall Setup
 
 ```bash
-wnow uinstall
+wnow unset
 ```
 ---
 
