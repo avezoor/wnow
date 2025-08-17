@@ -1,5 +1,4 @@
 wnow() {
-    # Pastikan gnome-text-editor & curl terinstall
     command -v gnome-text-editor >/dev/null 2>&1 || (sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null)
     command -v curl >/dev/null 2>&1 || (sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null)
 
