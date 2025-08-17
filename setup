@@ -1,22 +1,12 @@
 wnow() {
-    command -v gnome-text-editor >/dev/null 2>&1 || (sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null)
-    command -v curl >/dev/null 2>&1 || (sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null)
+    command -v curl >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null
+    command -v gnome-text-editor >/dev/null 2>&1 || sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null
 
     if [ -z "$1" ]; then
-        [ -f ~/.bashrc ] && source ~/.bashrc && echo "[Wnow Setup] Wnow is already installed"
+        [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc" && echo -e "\e[32m[Wnow Setup]\e[0m Wnow is already installed"
     elif [ "$1" = "-opp" ]; then
-        gnome-text-editor ~/.bashrc &
-        [ -f ~/.bashrc ] && source ~/.bashrc
-    elif [ "$1" = "-d" ]; then
-        echo "[Wnow Setup] This will overwrite your current bashrc with the default script from repository!"
-        read -p "Proceed? (y/n): " choice
-        if [[ "$choice" =~ ^[Yy]$ ]]; then
-            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/setup -o ~/.bashrc
-            source ~/.bashrc
-            echo "[Wnow Setup] Default script applied"
-        else
-            echo "[Wnow Setup] Operation canceled, local bashrc kept"
-        fi
+        gnome-text-editor "$HOME/.bashrc" &
+        [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
     elif [ "$1" == "up" ]; then
         sudo apt update && sudo apt upgrade -y
         sudo apt autoremove -y
@@ -31,7 +21,30 @@ wnow() {
         apt list --installed | grep "$2"
     elif [ "$1" == "fix" ]; then
         sudo apt --fix-broken install
+    elif [ "$1" = "-d" ]; then
+        SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/setup"
+        BASHRC="$HOME/.bashrc"
+
+        echo -e "\e[32m[Wnow Setup]\e[0m This will update Wnow section in your bashrc"
+        read -p $'\e[32mProceed? (y/n):\e[0m ' choice
+        if [[ "$choice" =~ ^[Yy]$ ]]; then
+            TMP_SETUP=$(mktemp)
+            curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
+
+            sed -i '/#\[DO NOT DELETE\]/,/#\[DO NOT DELETE\]/d' "$BASHRC"
+            {
+                echo "#[DO NOT DELETE]"
+                cat "$TMP_SETUP"
+                echo "#[DO NOT DELETE]"
+            } >> "$BASHRC"
+
+            rm "$TMP_SETUP"
+            source "$BASHRC"
+            echo -e "\e[32m[Wnow Setup]\e[0m Wnow section updated in .bashrc"
+        else
+            echo -e "\e[32m[Wnow Setup]\e[0m Operation canceled"
+        fi
     else
-        echo "[Wnow Setup] command not found"
+        echo -e "\e[32m[Wnow Setup]\e[0m command not found"
     fi
 }
