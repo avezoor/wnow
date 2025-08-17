@@ -27,7 +27,7 @@ wnow() {
         BASHRC="$HOME/.bashrc"
 
         echo -e "\e[32m[$WNOWCMD Setup]\e[0m This will update $WNOWCMD setup in your bashrc"
-        read -p $'\e[32mProceed? (y/n):\e[0m ' choice
+        read -p $'\e[32m[$WNOWCMD Setup]\e[0m Proceed? (y/n):\e[0m ' choice
         if [[ "$choice" =~ ^[Yy]$ ]]; then
             TMP_SETUP=$(mktemp)
             curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
@@ -51,7 +51,7 @@ wnow() {
         BASHRC="$HOME/.bashrc"
 
         echo -e "\e[32m[$WNOWCMD Setup]\e[0m This will delete $WNOWCMD setup in your bashrc"
-        read -p $'\e[32mProceed? (y/n):\e[0m ' choice
+        read -p $'\e[32m[$WNOWCMD Setup]\e[0m Proceed? (y/n):\e[0m ' choice
         if [[ "$choice" =~ ^[Yy]$ ]]; then
             TMP_SETUP=$(mktemp)
             curl -fsSL "$SETUP_URL" -o "$TMP_SETUP"
