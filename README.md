@@ -5,40 +5,42 @@
 ### Support on
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png" alt="Linux" width="32" height="32">
 
-Download the installer:
+1. Download the installer:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/refs/heads/main/install.sh -o install.sh
 ````
 
-Make it executable:
+2. Make it executable:
 
 ```bash
 chmod +x install.sh
 ```
 
-Run the installer:
+3. Run the installer:
 
 ```bash
 ./install.sh
 ```
 
-Remove the installer file afterwards:
+4. Remove the installer file afterwards:
 
 ```bash
 rm ./install.sh
 ```
 
-Don't Forget:
+5. Don't Forget:
 
 ```bash
 source ~/.bashrc
 ```
-### Uninstall Wnow Setup
+
+### Uninstall Setup
 
 ```bash
 wnow uinstall
 ```
+---
 
 ## Features
 
