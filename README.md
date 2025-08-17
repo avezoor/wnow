@@ -1,9 +1,9 @@
 # Wnow Installer
 
-## Installation on Lineux
+## Installation on Linux
 
 ### Support for
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Linux_Mint_logo_2018.svg" alt="Linux Mint" width="32" height="32">
+<img src="https://icons.iconarchive.com/icons/papirus-team/papirus-apps/128/distributor-logo-linux-mint-icon.png" width="32" height="32">
 
 1. Download the installer:
 
