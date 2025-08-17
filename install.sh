@@ -21,4 +21,4 @@ rm "$TMP_SETUP"
 
 source "$BASHRC"
 
-echo -e "\e[32m[Wnow Command]\e[0m Wnow setup updated in .bashrc"
+echo -e "\e[32m[Wnow Setup]\e[0m Wnow setup updated in .bashrc"
