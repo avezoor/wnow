@@ -23,6 +23,12 @@ Run the installer:
 ./install.sh
 ```
 
+Remove the installer file afterwards:
+
+```bash
+rm ./install.sh
+```
+
 ## Features
 
 * Automatically adds Wnow function to `~/.bashrc`.
