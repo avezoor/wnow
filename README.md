@@ -1,9 +1,9 @@
 # Wnow Installer
 
-## Installation
+## Installation on Lineux
 
-### Support on
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png" alt="Linux" width="32" height="32">
+### Support for
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Linux_Mint_logo_2018.svg" alt="Linux Mint" width="32" height="32">
 
 1. Download the installer:
 
