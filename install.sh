@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WNOWRC="$HOME/.wnowrc"
-SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/main/setup"
+SETUP_URL="https://raw.githubusercontent.com/avezoor/wnow/main/linux"
 
 command -v curl >/dev/null 2>&1 || { sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq curl >/dev/null; }
 command -v gnome-text-editor >/dev/null 2>&1 || { sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq gnome-text-editor >/dev/null; }
