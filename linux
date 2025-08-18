@@ -95,6 +95,16 @@ wnow() {
             echo -e "\e[32m[ Message ]\e[0m No alias file found."
         fi
 
+    elif [[ "$1" == "unset" ]]; then
+        echo -e "\e[32m[ Message ]\e[0m This will remove setup files."
+        read -rp $'\e[32m[ Message ]\e[0m Proceed? (y/n): ' confirm
+        if [[ "$confirm" =~ ^[Yy]$ ]]; then
+            rm -f "$HOME/.wnowrc" "$HOME/.links" "$HOME/.lnxpack"
+            echo -e "\e[32m[ Message ]\e[0m All setup files removed."
+        else
+            echo -e "\e[32m[ Message ]\e[0m Unset canceled."
+        fi
+
     else
         echo -e "\e[32m[ Message ]\e[0m command not found: $1"
     fi
