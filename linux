@@ -93,6 +93,12 @@ wnow() {
         else
             echo -e "\e[32m[ Message ]\e[0m No alias file found."
         fi
+    elif [[ "$1" == "fix" ]]; then
+        echo -e "\e[32m[ Message ]\e[0m Fixing broken dependencies..."
+        sudo apt --fix-broken install -y \
+            && echo -e "\e[32m[ Message ]\e[0m System fixed successfully." \
+            || echo -e "\e[32m[ Message ]\e[0m Failed to fix system."
+
 
     elif [[ "$1" == "unset" ]]; then
         echo -e "\e[32m[ Message ]\e[0m This will remove setup files."
