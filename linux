@@ -1,21 +1,25 @@
 wnow() {
-    if [[ "$1" == "-d" ]]; then
-        echo "[Wnow Update] This will update your ~/.wnowrc from the server."
-        read -p "Proceed? (y/n): " confirm
-        if [[ "$confirm" =~ ^[Yy]$ ]]; then
-            TMP_SETUP=$(mktemp)
-            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/main/linux -o "$TMP_SETUP"
-            if [[ $? -eq 0 ]]; then
-                mv "$TMP_SETUP" "$HOME/.wnowrc"
-                echo "[Wnow Update] ~/.wnowrc updated successfully."
-            else
-                echo "[Wnow Update] Failed to download the update."
-                rm -f "$TMP_SETUP"
-            fi
+    if [[ -z "$1" ]]; then
+        if [[ -f "$HOME/.wnowrc" ]]; then
+            source "$HOME/.wnowrc"
+            echo -e "\e[32m[ Message ]\e[0m setup sourced successfully."
         else
-            echo "[Wnow Update] Update canceled."
+            echo -e "\e[32m[ Message ]\e[0m setup not found."
+        fi
+    elif [[ "$1" == "-d" ]]; then
+        echo -e "\e[32m[ Message ]\e[0m This will overwrite your setup from the server."
+        read -rp $'\e[32m[ Message ]\e[0m Proceed? (y/n): ' confirm
+        if [[ "$confirm" =~ ^[Yy]$ ]]; then
+            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/main/setup -o "$HOME/.wnowrc" \
+                && echo -e "\e[32m[ Message ]\e[0m setup updated successfully." \
+                || { echo -e "\e[32m[ Message ]\e[0m Failed to download the update."; return 1; }
+
+            source "$HOME/.wnowrc"
+            echo -e "\e[32m[ Message ]\e[0m setup sourced successfully."
+        else
+            echo -e "\e[32m[ Message ]\e[0m Update canceled."
         fi
     else
-        echo "Usage: wnow -d"
+        echo -e "\e[32m[ Message ]\e[0m command not found: $1
     fi
 }
