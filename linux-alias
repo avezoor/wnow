@@ -5,10 +5,13 @@ alias yt="xdg-open https://www.youtube.com &>/dev/null &"
 alias github="xdg-open https://github.com &>/dev/null &"
 alias gmail="xdg-open https://mail.google.com &>/dev/null &"
 alias gemini="xdg-open https://gemini.google.com &>/dev/null &"
-alias drive="xdg-open https://drive.google.com &>/dev/null &"
+alias gdrive="xdg-open https://drive.google.com &>/dev/null &"
+alias gcal="xdg-open https://calendar.google.com"
+alias gkeep="xdg-open https://keep.google.com"
+alias canva="xdg-open https://www.canva.com"
+alias figma="xdg-open https://www.figma.com"
 
 # Apps
 alias theme="gnome-control-center appearance &>/dev/null &"
 alias sysmon="gnome-system-monitor &>/dev/null &"
 alias txt="gnome-text-editor &>/dev/null &"
-
