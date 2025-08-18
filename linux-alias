@@ -1,1 +1,14 @@
+# Urls
+alias wa="xdg-open https://web.whatsapp.com &>/dev/null &"
+alias openai="xdg-open https://chat.openai.com &>/dev/null &"
+alias yt="xdg-open https://www.youtube.com &>/dev/null &"
+alias github="xdg-open https://github.com &>/dev/null &"
+alias gmail="xdg-open https://mail.google.com &>/dev/null &"
+alias gemini="xdg-open https://gemini.google.com &>/dev/null &"
+alias drive="xdg-open https://drive.google.com &>/dev/null &"
+
+# Apps
+alias theme="gnome-control-center appearance &>/dev/null &"
+alias sysmon="gnome-system-monitor &>/dev/null &"
+alias txt="gnome-text-editor &>/dev/null &"
 
