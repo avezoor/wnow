@@ -21,7 +21,7 @@ wnow() {
             echo -e "\e[32m[ Message ]\e[0m Update canceled."
         fi
 
-    elif [[ "$1" == "-up" ]]; then
+    elif [[ "$1" == "up" ]]; then
         echo -e "\e[32m[ Message ]\e[0m Running full system update..."
         sudo apt update \
         && sudo apt upgrade -y \
@@ -52,6 +52,15 @@ wnow() {
             sudo apt install -y "$2"
         else
             echo -e "\e[32m[ Message ]\e[0m Please provide a package name."
+        fi
+
+    elif [[ "$1" == "-e" ]]; then
+        if [[ -n "$2" ]]; then
+            WNOWFP=$(realpath -m "$2")
+            echo -e "\e[32m[ Message ]\e[0m Opening file: $WNOWFP"
+            gnome-text-editor "$WNOWFP"
+        else
+            echo -e "\e[32m[ Message ]\e[0m Please provide a file to edit."
         fi
 
     else
