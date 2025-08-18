@@ -4,7 +4,7 @@ wnow() {
         read -p "Proceed? (y/n): " confirm
         if [[ "$confirm" =~ ^[Yy]$ ]]; then
             TMP_SETUP=$(mktemp)
-            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/main/setup -o "$TMP_SETUP"
+            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/main/linux -o "$TMP_SETUP"
             if [[ $? -eq 0 ]]; then
                 mv "$TMP_SETUP" "$HOME/.wnowrc"
                 echo "[Wnow Update] ~/.wnowrc updated successfully."
