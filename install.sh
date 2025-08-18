@@ -25,4 +25,4 @@ if ! grep -Fxq "source \$HOME/.wnowrc" "$HOME/.bashrc"; then
     echo "source \$HOME/.wnowrc" >> "$HOME/.bashrc"
 fi
 
-echo -e "\e[32m[ Message ] \e[0m Wnow setup updated in .wnowrc and will auto-load in new terminals"
+echo -e "\e[32m[ Message ]\e[0m Wnow setup updated in .wnowrc and will auto-load in new terminals"
