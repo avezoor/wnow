@@ -6,6 +6,7 @@ wnow() {
         else
             echo -e "\e[32m[ Message ]\e[0m setup not found."
         fi
+
     elif [[ "$1" == "-d" ]]; then
         echo -e "\e[32m[ Message ]\e[0m This will overwrite your setup from the server."
         read -rp $'\e[32m[ Message ]\e[0m Proceed? (y/n): ' confirm
@@ -19,6 +20,40 @@ wnow() {
         else
             echo -e "\e[32m[ Message ]\e[0m Update canceled."
         fi
+
+    elif [[ "$1" == "-up" ]]; then
+        echo -e "\e[32m[ Message ]\e[0m Running full system update..."
+        sudo apt update \
+        && sudo apt upgrade -y \
+        && sudo apt autoremove -y \
+        && sudo apt autoclean \
+        && echo -e "\e[32m[ Message ]\e[0m System updated and cleaned successfully." \
+        || echo -e "\e[32m[ Message ]\e[0m System update failed."
+
+    elif [[ "$1" == "-f" ]]; then
+        if [[ -n "$2" ]]; then
+            echo -e "\e[32m[ Message ]\e[0m Searching for package: $2"
+            apt search "$2"
+        else
+            echo -e "\e[32m[ Message ]\e[0m Please provide a package name."
+        fi
+
+    elif [[ "$1" == "-r" ]]; then
+        if [[ -n "$2" ]]; then
+            echo -e "\e[32m[ Message ]\e[0m Removing package: $2"
+            sudo apt remove -y "$2"
+        else
+            echo -e "\e[32m[ Message ]\e[0m Please provide a package name."
+        fi
+
+    elif [[ "$1" == "-i" ]]; then
+        if [[ -n "$2" ]]; then
+            echo -e "\e[32m[ Message ]\e[0m Installing package: $2"
+            sudo apt install -y "$2"
+        else
+            echo -e "\e[32m[ Message ]\e[0m Please provide a package name."
+        fi
+
     else
         echo -e "\e[32m[ Message ]\e[0m command not found: $1"
     fi
