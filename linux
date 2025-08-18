@@ -2,6 +2,9 @@ wnow() {
     if [[ -z "$1" ]]; then
         if [[ -f "$HOME/.wnowrc" ]]; then
             source "$HOME/.wnowrc"
+            source "$HOME/.links"
+            source "$HOME/.lnxpack"
+            source "$HOME/.bashrc"
             echo -e "\e[32m[ Message ]\e[0m setup sourced successfully."
         else
             echo -e "\e[32m[ Message ]\e[0m setup not found."
@@ -62,14 +65,18 @@ wnow() {
         else
             echo -e "\e[32m[ Message ]\e[0m Please provide a file to edit."
         fi
+
     elif [[ "$1" == "startup" ]]; then
         echo -e "\e[32m[ Message ]\e[0m Running startup setup..."
     
         if [[ -f "$HOME/.links" ]]; then
             source "$HOME/.links"
-            echo -e "\e[32m[ Message ]\e[0m Alias loaded from file"
+            echo -e "\e[32m[ Message ]\e[0m Alias loaded."
         else
-            echo -e "\e[32m[ Message ]\e[0m No alias file found"
+            echo -e "\e[32m[ Message ]\e[0m Fetching alias from server..."
+            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/main/linux-alias -o "$HOME/.links" \
+                && { source "$HOME/.links"; echo -e "\e[32m[ Message ]\e[0m Alias loaded from server."; } \
+                || echo -e "\e[32m[ Message ]\e[0m Failed to fetch alias."
         fi
     
         echo -e "\e[32m[ Message ]\e[0m Fetching Linux Package list..."
@@ -77,7 +84,7 @@ wnow() {
             && echo -e "\e[32m[ Message ]\e[0m Linux Package list updated." \
             || { echo -e "\e[32m[ Message ]\e[0m Failed to download Linux Package list."; return 1; }
     
-        echo -e "\e[32m[ Message ]\e[0m Installing Linux Packages"
+        echo -e "\e[32m[ Message ]\e[0m Installing Linux Packages..."
         xargs -a "$HOME/.lnxpack" sudo apt-get install -y
         echo -e "\e[32m[ Message ]\e[0m Linux Packages installed successfully."
     
@@ -85,7 +92,7 @@ wnow() {
         if [[ -f "$HOME/.links" ]]; then
             gnome-text-editor "$HOME/.links"
         else
-            echo -e "\e[32m[ Message ]\e[0m No alias file found (~/.links)."
+            echo -e "\e[32m[ Message ]\e[0m No alias file found."
         fi
 
     else
