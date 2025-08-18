@@ -62,6 +62,31 @@ wnow() {
         else
             echo -e "\e[32m[ Message ]\e[0m Please provide a file to edit."
         fi
+    elif [[ "$1" == "startup" ]]; then
+        echo -e "\e[32m[ Message ]\e[0m Running startup setup..."
+    
+        if [[ -f "$HOME/.links" ]]; then
+            source "$HOME/.links"
+            echo -e "\e[32m[ Message ]\e[0m Alias loaded from file"
+        else
+            echo -e "\e[32m[ Message ]\e[0m No alias file found"
+        fi
+    
+        echo -e "\e[32m[ Message ]\e[0m Fetching Linux Package list..."
+        curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/main/linux-startup -o "$HOME/.lnxpack" \
+            && echo -e "\e[32m[ Message ]\e[0m Linux Package list updated." \
+            || { echo -e "\e[32m[ Message ]\e[0m Failed to download Linux Package list."; return 1; }
+    
+        echo -e "\e[32m[ Message ]\e[0m Installing Linux Packages"
+        xargs -a "$HOME/.lnxpack" sudo apt-get install -y
+        echo -e "\e[32m[ Message ]\e[0m Linux Packages installed successfully."
+    
+    elif [[ "$1" == "-l" ]]; then
+        if [[ -f "$HOME/.links" ]]; then
+            gnome-text-editor "$HOME/.links"
+        else
+            echo -e "\e[32m[ Message ]\e[0m No alias file found (~/.links)."
+        fi
 
     else
         echo -e "\e[32m[ Message ]\e[0m command not found: $1"
