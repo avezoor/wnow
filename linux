@@ -3,7 +3,6 @@ wnow() {
         if [[ -f "$HOME/.wnowrc" ]]; then
             source "$HOME/.wnowrc"
             source "$HOME/.links"
-            source "$HOME/.lnxpack"
             source "$HOME/.bashrc"
             echo -e "\e[32m[ Message ]\e[0m setup sourced successfully."
         else
