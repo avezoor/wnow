@@ -10,7 +10,7 @@ wnow() {
         echo -e "\e[32m[ Message ]\e[0m This will overwrite your setup from the server."
         read -rp $'\e[32m[ Message ]\e[0m Proceed? (y/n): ' confirm
         if [[ "$confirm" =~ ^[Yy]$ ]]; then
-            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/main/setup -o "$HOME/.wnowrc" \
+            curl -fsSL https://raw.githubusercontent.com/avezoor/wnow/main/linux -o "$HOME/.wnowrc" \
                 && echo -e "\e[32m[ Message ]\e[0m setup updated successfully." \
                 || { echo -e "\e[32m[ Message ]\e[0m Failed to download the update."; return 1; }
 
